@@ -1,21 +1,56 @@
 {% assign product_handle = section.settings.product %}
 {% assign product = all_products[product_handle] %}
+{{ 'metaobject-slider.css' | asset_url | stylesheet_tag }}
 
-<h3>{{product.title}}</h3>
-{% assign list_products = product.metafields.custom.related_products_with_banner.value %}
-{% for item in list_products %}
-  {% assign banner = item.slider_banner %}
-  {% assign slider_p_handle = item.slider_product %}
-  {% assign product_from_slider = all_products[slider_p_handle] %}
-            <div class="swiper-slide">
-                <a href="{{product_from_slider.url}}">
-                    <img src="{{ banner | image_url: width: 300 }}" width="300px" height="auto">
-                    <h2>{{product_from_slider.title}}</h2>
-                </a>
-            </div>
-{% endfor %}
+<link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css"
+/>
+<script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
 
+<section class="metaobject-slider">
+    <div class="metaobject-slider__product">
+        <h3>{{product.title}}</h3>
+        <img src="{{ product.featured_image | image_url: width: 300 }}" width="300px" height="auto">
+        <p>{{product.description}}</p>
+        <h4>{{product.price |  money}}</h4>
+    </div>
+    {% assign list_products = product.metafields.custom.related_products_with_banner.value %}
+    <!-- Slider main container -->
+    <div class="swiper">
+    <!-- Additional required wrapper -->
+    <div class="swiper-wrapper">
+    <!-- Slides -->
+    {% for item in list_products %}
+        {% assign banner = item.slider_banner %}
+        {% assign slider_p_handle = item.slider_product %}
+        {% assign product_from_slider = all_products[slider_p_handle] %}
+        <div class="swiper-slide">
+            <a href="{{product_from_slider.url}}">
+                <img src="{{ banner | image_url: width: 300 }}" width="300px" height="auto">
+                {% if product_from_slider.featured_image %}
+                    <img src="{{ product_from_slider.featured_image | image_url: width: 220 }}"
+                        alt="{{ product_from_slider.title | escape }}"
+                    >
+                {% endif %}
+                <h4>{{product_from_slider.title}}</h4>
+            </a>
+        </div>
+    {% endfor %}
+    </div>
+        <!-- If we need pagination -->
+        <div class="swiper-pagination"></div>
 
+        <!-- If we need navigation buttons -->
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+
+        <!-- If we need scrollbar -->
+        <div class="swiper-scrollbar"></div>
+    </div>
+</section>
+
+{{ 'metaobject-slider.js' | asset_url | script_tag }}
 {% schema %}
     {
         "name": "Produto",
