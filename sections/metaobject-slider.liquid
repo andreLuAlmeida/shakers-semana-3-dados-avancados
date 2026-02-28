@@ -3,7 +3,17 @@
 
 <h3>{{product.title}}</h3>
 {% assign list_products = product.metafields.custom.related_products_with_banner.value %}
-{{list_products |  json}}
+{% for item in list_products %}
+  {% assign banner = item.slider_banner %}
+  {% assign slider_p_handle = item.slider_product %}
+  {% assign product_from_slider = all_products[slider_p_handle] %}
+            <div class="swiper-slide">
+                <a href="{{product_from_slider.url}}">
+                    <img src="{{ banner | image_url: width: 300 }}" width="300px" height="auto">
+                    <h2>{{product_from_slider.title}}</h2>
+                </a>
+            </div>
+{% endfor %}
 
 
 {% schema %}
