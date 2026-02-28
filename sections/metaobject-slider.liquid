@@ -1,0 +1,16 @@
+{% assign product_handle = section.settings.product %}
+{% assign product = all_products[product_handle] %}
+
+<h3>{{product.title}}</h3>
+{% assign list_products = product.metafields.custom.sliders.value %}
+
+{% schema %}
+    {
+        "name": "Produto",
+        "settings": [{
+            "type": "product",
+            "id": "product",
+            "label": "Product"
+        }]
+    }
+{% endschema %}
