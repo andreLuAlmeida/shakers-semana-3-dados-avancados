@@ -6,7 +6,7 @@
  * or related systems. Please exercise caution as any changes
  * made to this file may be overwritten.
  * ------------------------------------------------------------
- */{
+ {
   "sections": {
     "hero_jVaWmY": {
       "type": "hero",
@@ -287,4 +287,14 @@
     "hero_jVaWmY",
     "product_list_fa6P9H"
   ]
+}
+*/
+{
+  "sections": {
+    "main": {
+      "type": "metaobject-slider",
+      "settings": {}
+    }
+  },
+  "order": ["main"]
 }

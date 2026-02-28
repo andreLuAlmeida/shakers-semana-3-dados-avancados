@@ -2,7 +2,9 @@
 {% assign product = all_products[product_handle] %}
 
 <h3>{{product.title}}</h3>
-{% assign list_products = product.metafields.custom.sliders.value %}
+{% assign list_products = product.metafields.custom.related_products_with_banner.value %}
+{{list_products |  json}}
+
 
 {% schema %}
     {
