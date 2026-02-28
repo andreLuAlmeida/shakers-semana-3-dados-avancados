@@ -16,38 +16,40 @@
         <h4>{{product.price |  money}}</h4>
     </div>
     {% assign list_products = product.metafields.custom.related_products_with_banner.value %}
-    <!-- Slider main container -->
-    <div class="swiper">
-    <!-- Additional required wrapper -->
-    <div class="swiper-wrapper">
-    <!-- Slides -->
-    {% for item in list_products %}
-        {% assign banner = item.slider_banner %}
-        {% assign slider_p_handle = item.slider_product %}
-        {% assign product_from_slider = all_products[slider_p_handle] %}
-        <div class="swiper-slide">
-            <a href="{{product_from_slider.url}}">
-                <img src="{{ banner | image_url: width: 300 }}" width="300px" height="auto">
-                {% if product_from_slider.featured_image %}
-                    <img src="{{ product_from_slider.featured_image | image_url: width: 220 }}"
-                        alt="{{ product_from_slider.title | escape }}"
-                    >
-                {% endif %}
-                <h4>{{product_from_slider.title}}</h4>
-            </a>
-        </div>
-    {% endfor %}
-    </div>
-        <!-- If we need pagination -->
-        <div class="swiper-pagination"></div>
+    {% if list_products %}
+            <!-- Slider main container -->
+            <div class="swiper">
+            <!-- Additional required wrapper -->
+            <div class="swiper-wrapper">
+            <!-- Slides -->
+            {% for item in list_products %}
+                {% assign banner = item.slider_banner %}
+                {% assign slider_p_handle = item.slider_product %}
+                {% assign product_from_slider = all_products[slider_p_handle] %}
+                <div class="swiper-slide">
+                    <a href="{{product_from_slider.url}}">
+                        <img src="{{ banner | image_url: width: 300 }}" width="300px" height="auto">
+                        {% if product_from_slider.featured_image %}
+                            <img src="{{ product_from_slider.featured_image | image_url: width: 220 }}"
+                                alt="{{ product_from_slider.title | escape }}"
+                            >
+                        {% endif %}
+                        <h4>{{product_from_slider.title}}</h4>
+                    </a>
+                </div>
+            {% endfor %}
+            </div>
+                <!-- If we need pagination -->
+                <div class="swiper-pagination"></div>
 
-        <!-- If we need navigation buttons -->
-        <div class="swiper-button-prev"></div>
-        <div class="swiper-button-next"></div>
+                <!-- If we need navigation buttons -->
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
 
-        <!-- If we need scrollbar -->
-        <div class="swiper-scrollbar"></div>
-    </div>
+                <!-- If we need scrollbar -->
+                <div class="swiper-scrollbar"></div>
+            </div>
+    {% endif %}
 </section>
 
 {{ 'metaobject-slider.js' | asset_url | script_tag }}
